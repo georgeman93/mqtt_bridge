@@ -2,39 +2,16 @@ mqtt:
   client:
     protocol: 4      # MQTTv311
   connection:
-    host: 10.211.55.4 #change to the address of the webserver with mosquitto broker installed
+    host: localhost #the mosquitto broker forwarding the /tf messages is on the same computer
     port: 1883
     keepalive: 60
-  private_path: device/001 #not used
+  private_path: device/001
 serializer: json:dumps
 deserializer: json:loads
 bridge:
 
   #Subscribed Topics:
   - factory: mqtt_bridge.bridge:MqttToRosBridge
-    msg_type: std_msgs.msg:String
-    topic_from: /jelly_control/mode
-    topic_to: /jelly_control/mode
-  - factory: mqtt_bridge.bridge:MqttToRosBridge
-    msg_type: std_msgs.msg:String
-    topic_from: /jelly_gui/command
-    topic_to: /jelly_gui/command
-  - factory: mqtt_bridge.bridge:MqttToRosBridge
-    msg_type: std_msgs.msg:Bool
-    topic_from: /jelly_hardware/calibrate
-    topic_to: /jelly_hardware/calibrate
-
-
-  #Published Data:
-  - factory: mqtt_bridge.bridge:RosToMqttBridge
-    msg_type: std_msgs.msg:String
-    topic_from: /jelly_gui/status
-    topic_to: jelly_gui/status
-  - factory: mqtt_bridge.bridge:RosToMqttBridge
-    msg_type: std_msgs.msg:String
-    topic_from: /jelly_gui/status
-    topic_to: jelly_gui/status
-  - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: tf.msg:tfMessage
     topic_from: /tf
     topic_to: /tf
